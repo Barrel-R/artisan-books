@@ -24,6 +24,7 @@ class LivroUpdateRequest extends FormRequest
         return [
             "titulo" => "required|string|min:3|max:255",
             "descricao" => "required|string|min:3|max:255",
+            "descricaoLonga" => "required|string|min:3|max:3000",
             "genero" => "required|string|min:3|max:255",
         ];
     }

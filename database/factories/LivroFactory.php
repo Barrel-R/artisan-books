@@ -19,6 +19,7 @@ class LivroFactory extends Factory
         return [
             "titulo" => fake()->word(),
             "descricao" => fake()->sentences(1, true),
+            "descricaoLonga" => fake()->paragraphs(),
             "genero" => fake()->word(),
         ];
     }
