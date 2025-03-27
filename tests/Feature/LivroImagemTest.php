@@ -45,7 +45,9 @@ test("imagem pode ser editada", function () {
 
     $response = $this->actingAs($this->admin)->patch("/imagens/$imagem->id", $novaImagem);
 
-    expect(LivroImagem::find($imagem->id)->path)->toBe($novaImagem["path"]);
+    $imagem->refresh();
+
+    expect($imagem->path)->toBe($novaImagem["path"]);
 
     $response->assertSessionHasNoErrors()->assertRedirect("/imagens/$imagem->id");
 });

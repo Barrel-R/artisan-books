@@ -6,7 +6,7 @@ use App\Http\Requests\LivroVideoStoreRequest;
 use App\Http\Requests\LivroVideoUpdateRequest;
 use App\Models\LivroVideo;
 
-class VideoService
+class LivroVideoService
 {
     public function criaVideo(LivroVideoStoreRequest $request): LivroVideo
     {

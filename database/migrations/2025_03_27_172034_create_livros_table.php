@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("titulo");
             $table->string("descricao");
-            $table->longText("descricao_longa");
+            $table->longText("descricaoLonga");
             $table->string("genero");
             $table->softDeletes();
             $table->timestamps();

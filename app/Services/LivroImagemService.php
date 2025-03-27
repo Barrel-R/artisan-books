@@ -6,7 +6,7 @@ use App\Http\Requests\LivroImagemStoreRequest;
 use App\Http\Requests\LivroImagemUpdateRequest;
 use App\Models\LivroImagem;
 
-class ImagemService
+class LivroImagemService
 {
     public function criaImagem(LivroImagemStoreRequest $request): LivroImagem
     {

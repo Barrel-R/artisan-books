@@ -15,6 +15,7 @@ class Livro extends Model
     protected $fillable = [
         "titulo",
         "descricao",
+        "descricaoLonga",
         "genero",
     ];
 
