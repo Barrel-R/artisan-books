@@ -22,7 +22,7 @@ class CategoriaUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "descricao" => "required|string|min:3|max:255",
+            "descricao" => "sometimes|string|min:3|max:255",
         ];
     }
 }

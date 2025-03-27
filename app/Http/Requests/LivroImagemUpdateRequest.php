@@ -22,8 +22,8 @@ class LivroImagemUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "livro_id" => "required|exists:livros,id",
-            "path" => "required|string|min:1|max:255",
+            "livro_id" => "sometimes|exists:livros,id",
+            "path" => "sometimes|string|min:1|max:255",
         ];
     }
 }

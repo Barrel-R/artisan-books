@@ -22,10 +22,10 @@ class LivroUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "titulo" => "required|string|min:3|max:255",
-            "descricao" => "required|string|min:3|max:255",
-            "descricaoLonga" => "required|string|min:3|max:3000",
-            "genero" => "required|string|min:3|max:255",
+            "titulo" => "sometimes|string|min:3|max:255",
+            "descricao" => "sometimes|string|min:3|max:255",
+            "descricaoLonga" => "sometimes|string|min:3|max:3000",
+            "genero" => "sometimes|string|min:3|max:255",
         ];
     }
 }

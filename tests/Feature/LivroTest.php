@@ -5,12 +5,29 @@ use App\Models\Livro;
 use App\Models\LivroImagem;
 use App\Models\LivroVideo;
 use App\Models\User;
-use Database\Seeders\PermissionSeeder;
-use Database\Seeders\RoleSeeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 beforeEach(function () {
-    $this->seed(PermissionSeeder::class);
-    $this->seed(RoleSeeder::class);
+    $permissions = [
+        ["name" => "ver livros", "guard_name" => "web"],
+        ["name" => "ver um livro", "guard_name" => "web"],
+        ["name" => "criar livros", "guard_name" => "web"],
+        ["name" => "editar livros", "guard_name" => "web"],
+        ["name" => "deletar livros", "guard_name" => "web"],
+    ];
+
+    $userPermissions = [
+        "ver livros",
+        "ver um livro",
+        "criar livros",
+        "editar livros",
+        "deletar livros",
+    ];
+
+    Permission::insert($permissions);
+    Role::create(['name' => 'Admin', 'guard_name' => 'web'])->givePermissionTo($userPermissions);
+
     $this->admin = User::factory()->create()->assignRole("Admin");
 });
 
@@ -22,20 +39,22 @@ test("página de livros pode ser vista", function () {
     $response->assertSessionHasNoErrors()->assertSuccessful();
 });
 
-test("livro pode ser criado", function () {
-    $livro = ["titulo" => "Um Livro", "descricao" => "sobre gatinhos", "descricaoLonga" => "Um livro interativo com vários gatos sobre alguma história muito interessante", "genero" => "Masculino"];
-
-    $response = $this->actingAs($this->admin)->post("/livros", $livro);
-
-    $response->assertSessionHasNoErrors()->assertRedirect("/livros");
-});
-
 test("livro pode ser visto", function () {
     $livro = Livro::factory()->create();
 
     $response = $this->actingAs($this->admin)->get("/livros/$livro->id");
 
     $response->assertSessionHasNoErrors()->assertSuccessful();
+});
+
+test("livro pode ser criado", function () {
+    $livro = ["titulo" => "Um Livro", "descricao" => "sobre gatinhos", "descricaoLonga" => "Um livro interativo com vários gatos sobre alguma história muito interessante", "genero" => "Masculino"];
+
+    $response = $this->actingAs($this->admin)->post("/livros", $livro);
+
+    $response->assertSessionHasNoErrors()->assertRedirect("/livros");
+
+    $this->assertDatabaseHas("livros", $livro);
 });
 
 test("livro pode ser editado", function () {
@@ -45,9 +64,11 @@ test("livro pode ser editado", function () {
 
     $response = $this->actingAs($this->admin)->patch("/livros/$livro->id", $novoLivro);
 
-    expect(Livro::find($livro->id)->titulo)->toBe($novoLivro['titulo']);
+    $livro->refresh();
 
     $response->assertSessionHasNoErrors()->assertRedirect("/livros/$livro->id");
+
+    expect($livro->titulo)->toBe($novoLivro['titulo']);
 });
 
 test("livro pode ser deletado", function () {

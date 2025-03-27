@@ -3,12 +3,29 @@
 use App\Models\Livro;
 use App\Models\LivroVideo;
 use App\Models\User;
-use Database\Seeders\PermissionSeeder;
-use Database\Seeders\RoleSeeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 beforeEach(function () {
-    $this->seed(PermissionSeeder::class);
-    $this->seed(RoleSeeder::class);
+    $permissions = [
+        ["name" => "ver videos", "guard_name" => "web"],
+        ["name" => "ver um video", "guard_name" => "web"],
+        ["name" => "criar videos", "guard_name" => "web"],
+        ["name" => "editar videos", "guard_name" => "web"],
+        ["name" => "deletar videos", "guard_name" => "web"],
+    ];
+
+    $userPermissions = [
+        "ver videos",
+        "ver um video",
+        "criar videos",
+        "editar videos",
+        "deletar videos",
+    ];
+
+    Permission::insert($permissions);
+    Role::create(['name' => 'Admin', 'guard_name' => 'web'])->givePermissionTo($userPermissions);
+
     $this->admin = User::factory()->create()->assignRole("Admin");
 });
 

@@ -3,12 +3,29 @@
 use App\Models\Livro;
 use App\Models\LivroImagem;
 use App\Models\User;
-use Database\Seeders\PermissionSeeder;
-use Database\Seeders\RoleSeeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 beforeEach(function () {
-    $this->seed(PermissionSeeder::class);
-    $this->seed(RoleSeeder::class);
+    $permissions = [
+        ["name" => "ver imagens", "guard_name" => "web"],
+        ["name" => "ver uma imagem", "guard_name" => "web"],
+        ["name" => "criar imagens", "guard_name" => "web"],
+        ["name" => "editar imagens", "guard_name" => "web"],
+        ["name" => "deletar imagens", "guard_name" => "web"],
+    ];
+
+    $userPermissions = [
+        "ver imagens",
+        "ver uma imagem",
+        "criar imagens",
+        "editar imagens",
+        "deletar imagens",
+    ];
+
+    Permission::insert($permissions);
+    Role::create(['name' => 'Admin', 'guard_name' => 'web'])->givePermissionTo($userPermissions);
+
     $this->admin = User::factory()->create()->assignRole("Admin");
 });
 
