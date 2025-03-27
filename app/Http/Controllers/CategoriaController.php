@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoriaStoreRequest;
+use App\Http\Requests\CategoriaUpdateRequest;
 use App\Models\Categoria;
-use Illuminate\Http\Request;
+use App\Services\CategoriaService;
 
 class CategoriaController extends Controller
 {
@@ -12,7 +14,7 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+        return inertia("Categoria/Index", ["categorias" => Categoria::all()]);
     }
 
     /**
@@ -20,46 +22,49 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        //
+        return inertia("Categoria/Create");
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoriaStoreRequest $request, CategoriaService $service)
     {
-        //
+        $service->criaCategoria($request);
+        return to_route("categorias.index");
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Categoria $categoria)
+    public function show(string $id)
     {
-        //
+        return inertia("Categoria/Show", ["categoria" => Categoria::find($id)]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Categoria $categoria)
+    public function edit(string $id)
     {
-        //
+        return inertia("Categoria/Edit", ["categoria" => Categoria::find($id)]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Categoria $categoria)
+    public function update(CategoriaUpdateRequest $request, string $id, CategoriaService $service)
     {
-        //
+        $service->editaCategoria($request, $id);
+        return to_route('categorias.show', ['categoria' => $id]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Categoria $categoria)
+    public function destroy(string $id)
     {
-        //
+        Categoria::destroy($id);
+        return to_route('categorias.index');
     }
 }

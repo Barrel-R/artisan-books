@@ -62,7 +62,9 @@ test("video pode ser editado", function () {
 
     $response = $this->actingAs($this->admin)->patch("/videos/$video->id", $novoVideo);
 
-    expect(LivroVideo::find($video->id)->path)->toBe($novoVideo["path"]);
+    $video->refresh();
+
+    expect($video->path)->toBe($novoVideo["path"]);
 
     $response->assertSessionHasNoErrors()->assertRedirect("/videos/$video->id");
 });
