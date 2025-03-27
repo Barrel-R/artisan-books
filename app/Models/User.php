@@ -12,6 +12,11 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles;
 
+    protected function getDefaultGuardName(): string
+    {
+        return "web";
+    }
+
     /**
      * The attributes that are mass assignable.
      *
