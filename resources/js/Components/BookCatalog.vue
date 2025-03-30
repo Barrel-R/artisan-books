@@ -3,6 +3,7 @@ import { ref, computed } from 'vue';
 import BookCard from './BookCard.vue';
 import BookTabs from './BookTabs.vue';
 import BookshelfFooter from './BookshelfFooter.vue';
+import BookModal from './BookModal.vue';
 
 interface Book {
     id: number;
@@ -20,11 +21,23 @@ interface Book {
     manufacturingTime: string;
 }
 
+const selectedBook = ref<Book | null>(null);
+const showModal = ref(false);
+
+const openModal = (book: Book) => {
+    selectedBook.value = book;
+    showModal.value = true;
+};
+
+const closeModal = () => {
+    showModal.value = false;
+};
+
 const tabs = [
-    { label: 'All Books', value: 'all' },
-    { label: 'Ages 3-6', value: 'age3-6' },
-    { label: 'Ages 4-8', value: 'age4-8' },
-    { label: 'New Arrivals', value: 'new' }
+    { label: 'Todos os livros', value: 'all' },
+    { label: 'Idades 3-6', value: 'age3-6' },
+    { label: 'Idades 4-8', value: 'age4-8' },
+    { label: 'Novidades', value: 'new' }
 ];
 
 const activeTab = ref('all');
@@ -207,11 +220,11 @@ const toggleBookExpand = (bookId: number) => {
     <div class="container px-4 py-12 mx-auto">
         <BookTabs :tabs="tabs" :activeTab="activeTab" @update:activeTab="(value) => activeTab = value" />
 
-        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            <BookCard v-for="book in filteredBooks" :key="book.id" :book="book"
-                :is-expanded="expandedBookId === book.id" @toggle-expand="toggleBookExpand(book.id)"
-                :class="{ 'md:col-span-2 lg:col-span-4': expandedBookId === book.id }" />
+        <div class="grid gap-15 md:grid-cols-2 lg:grid-cols-3">
+            <BookCard v-for="book in filteredBooks" :key="book.id" :book="book" @view-details="openModal(book)" />
         </div>
+
+        <BookModal v-if="selectedBook" :book="selectedBook" :show="showModal" @close="closeModal" />
 
         <BookshelfFooter />
     </div>
