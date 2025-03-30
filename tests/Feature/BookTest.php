@@ -1,9 +1,9 @@
 <?php
 
 use App\Models\Categoria;
-use App\Models\Livro;
-use App\Models\LivroImagem;
-use App\Models\LivroVideo;
+use App\Models\Book;
+use App\Models\BookImage;
+use App\Models\BookVideo;
 use App\Models\User;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -32,7 +32,7 @@ beforeEach(function () {
 });
 
 test("página de livros pode ser vista", function () {
-    Livro::factory()->create();
+    Book::factory()->create();
 
     $response = $this->actingAs($this->admin)->get("/livros");
 
@@ -40,7 +40,7 @@ test("página de livros pode ser vista", function () {
 });
 
 test("livro pode ser visto", function () {
-    $livro = Livro::factory()->create();
+    $livro = Book::factory()->create();
 
     $response = $this->actingAs($this->admin)->get("/livros/$livro->id");
 
@@ -48,7 +48,7 @@ test("livro pode ser visto", function () {
 });
 
 test("livro pode ser criado", function () {
-    $livro = ["titulo" => "Um Livro", "descricao" => "sobre gatinhos", "descricaoLonga" => "Um livro interativo com vários gatos sobre alguma história muito interessante", "genero" => "Masculino"];
+    $livro = ["titulo" => "Um livro", "descricao" => "sobre gatinhos", "descricaoLonga" => "Um livro interativo com vários gatos sobre alguma história muito interessante", "genero" => "Masculino"];
 
     $response = $this->actingAs($this->admin)->post("/livros", $livro);
 
@@ -58,7 +58,7 @@ test("livro pode ser criado", function () {
 });
 
 test("livro pode ser editado", function () {
-    $livro = Livro::factory()->create();
+    $livro = Book::factory()->create();
 
     $novoLivro = ["titulo" => "Um novo titulo"];
 
@@ -72,7 +72,7 @@ test("livro pode ser editado", function () {
 });
 
 test("livro pode ser deletado", function () {
-    $livro = Livro::factory()->create();
+    $livro = Book::factory()->create();
 
     $response = $this->actingAs($this->admin)->delete("/livros/$livro->id");
 
@@ -80,7 +80,7 @@ test("livro pode ser deletado", function () {
 });
 
 test("livro pode ter videos", function () {
-    $livro = Livro::factory()->create();
+    $livro = Book::factory()->create();
     $video = LivroVideo::factory()->create();
 
     $livro->videos()->save($video);
@@ -90,8 +90,8 @@ test("livro pode ter videos", function () {
 });
 
 test("livro pode ter imagens", function () {
-    $livro = Livro::factory()->create();
-    $imagem = LivroImagem::factory()->create();
+    $livro = Book::factory()->create();
+    $imagem = BookImage::factory()->create();
 
     $livro->imagens()->save($imagem);
 
@@ -100,7 +100,7 @@ test("livro pode ter imagens", function () {
 });
 
 test("livro pode ter categorias", function () {
-    $livro = Livro::factory()->create();
+    $livro = Book::factory()->create();
     $categoria = Categoria::factory()->create();
 
     $livro->categorias()->attach($categoria->id);

@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CategoriaStoreRequest;
-use App\Http\Requests\CategoriaUpdateRequest;
-use App\Models\Categoria;
-use App\Services\CategoriaService;
+use App\Http\Requests\{CategoryStoreRequest, CategoryUpdateRequest};
+use App\Models\Category;
+use App\Services\CategoryService;
 
-class CategoriaController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return inertia("Categoria/Index", ["categorias" => Categoria::all()]);
+        return inertia("Category/Index", ["categorias" => Category::all()]);
     }
 
     /**
@@ -22,15 +21,15 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        return inertia("Categoria/Create");
+        return inertia("Category/Create");
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CategoriaStoreRequest $request, CategoriaService $service)
+    public function store(CategoryStoreRequest $request, CategoryService $service)
     {
-        $service->criaCategoria($request);
+        $service->createCategory($request);
         return to_route("categorias.index");
     }
 
@@ -39,7 +38,7 @@ class CategoriaController extends Controller
      */
     public function show(string $id)
     {
-        return inertia("Categoria/Show", ["categoria" => Categoria::find($id)]);
+        return inertia("Category/Show", ["categoria" => Category::find($id)]);
     }
 
     /**
@@ -47,15 +46,15 @@ class CategoriaController extends Controller
      */
     public function edit(string $id)
     {
-        return inertia("Categoria/Edit", ["categoria" => Categoria::find($id)]);
+        return inertia("Category/Edit", ["categoria" => Category::find($id)]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(CategoriaUpdateRequest $request, string $id, CategoriaService $service)
+    public function update(CategoryUpdateRequest $request, string $id, CategoryService $service)
     {
-        $service->editaCategoria($request, $id);
+        $service->updateCategory($request, $id);
         return to_route('categorias.show', ['categoria' => $id]);
     }
 
@@ -64,7 +63,7 @@ class CategoriaController extends Controller
      */
     public function destroy(string $id)
     {
-        Categoria::destroy($id);
+        Category::destroy($id);
         return to_route('categorias.index');
     }
 }

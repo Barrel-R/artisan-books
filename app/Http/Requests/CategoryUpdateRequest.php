@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoriaStoreRequest extends FormRequest
+class CategoryUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return $this->user()->can("criar categorias");
+        return $this->user()->can("editar categorias");
     }
 
     /**
@@ -22,7 +22,8 @@ class CategoriaStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "descricao" => "required|string|min:3|max:255",
+            "description" => "sometimes|string|min:3|max:255",
+            "slug" => "nullable|string|min:1|max:60",
         ];
     }
 }

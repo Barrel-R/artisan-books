@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("title");
             $table->string("description");
-            $table->longText("longDescription");
+            $table->longText("long_description");
             $table->string("gender");
             $table->decimal("price");
             $table->string("age-range");

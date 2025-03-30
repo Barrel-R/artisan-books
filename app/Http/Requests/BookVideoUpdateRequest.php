@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LivroImagemUpdateRequest extends FormRequest
+class BookVideoUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return $this->user()->can("editar imagens");
+        return $this->user()->can("editar videos");
     }
 
     /**
@@ -22,7 +22,7 @@ class LivroImagemUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "livro_id" => "sometimes|exists:livros,id",
+            "book_id" => "sometimes|exists:books,id",
             "path" => "sometimes|string|min:1|max:255",
         ];
     }

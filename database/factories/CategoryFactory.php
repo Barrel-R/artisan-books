@@ -3,12 +3,11 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Livro;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class LivroImagemFactory extends Factory
+class CategoryFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +17,8 @@ class LivroImagemFactory extends Factory
     public function definition(): array
     {
         return [
-            "livro_id" => Livro::factory(),
-            "path" => fake()->filePath(),
+            "description" => fake()->paragraph(),
+            "slug" => fake()->slug(),
         ];
     }
 }

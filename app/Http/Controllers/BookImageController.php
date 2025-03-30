@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Livro;
-use App\Models\LivroImagem;
-use App\Services\LivroImagemService;
-use App\Http\Requests\{LivroImagemStoreRequest, LivroImagemUpdateRequest};
+use App\Models\Book;
+use App\Models\BookImage;
+use App\Services\BookImageService;
+use App\Http\Requests\{BookImageStoreRequest, BookImageUpdateRequest};
 
-class LivroImagemController extends Controller
+class BookImageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,8 @@ class LivroImagemController extends Controller
         // TODO: adicionar query string de numeros de itens paginados
 
         return inertia(
-            'Imagens/Index',
-            ['imagens' => LivroImagem::paginate(9)->load('livro')]
+            'Images/Index',
+            ['images' => BookImage::paginate(9)->load('livro')]
         );
     }
 
@@ -28,16 +28,16 @@ class LivroImagemController extends Controller
     public function create()
     {
         // TODO: adicionar livros ao cache
-        return inertia('Imagens/Create', ['livros' => Livro::all()]);
+        return inertia('Images/Create', ['livros' => Book::all()]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(LivroImagemStoreRequest $request, LivroImagemService $service)
+    public function store(BookImageStoreRequest $request, BookImageService $service)
     {
         $service->criaImagem($request);
-        return to_route('imagens.index');
+        return to_route('images.index');
     }
 
     /**
@@ -45,7 +45,7 @@ class LivroImagemController extends Controller
      */
     public function show(string $id)
     {
-        return inertia('Imagens/Show', ['imagem' => LivroImagem::find($id)->load('livro')]);
+        return inertia('Images/Show', ['imagem' => BookImage::find($id)->load('livro')]);
     }
 
     /**
@@ -53,16 +53,16 @@ class LivroImagemController extends Controller
      */
     public function edit(string $id)
     {
-        return inertia('Imagems/Edit', ['imagem' => LivroImagem::find($id)->load('livro')]);
+        return inertia('Imagems/Edit', ['imagem' => BookImage::find($id)->load('livro')]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(LivroImagemUpdateRequest $request, string $id, LivroImagemService $service)
+    public function update(BookImageUpdateRequest $request, string $id, BookImageService $service)
     {
         $service->editaImagem($request, $id);
-        return to_route('imagens.show', ['imagem' => $id]);
+        return to_route('images.show', ['imagem' => $id]);
     }
 
     /**
@@ -70,7 +70,7 @@ class LivroImagemController extends Controller
      */
     public function destroy(string $id)
     {
-        LivroImagem::destroy($id);
-        return to_route('imagens.index');
+        BookImage::destroy($id);
+        return to_route('images.index');
     }
 }

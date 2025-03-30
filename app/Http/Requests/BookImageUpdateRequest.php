@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoriaUpdateRequest extends FormRequest
+class BookImageUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return $this->user()->can("editar categorias");
+        return $this->user()->can("editar imagens");
     }
 
     /**
@@ -22,7 +22,8 @@ class CategoriaUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "descricao" => "sometimes|string|min:3|max:255",
+            "book_id" => "sometimes|exists:books,id",
+            "path" => "sometimes|string|min:1|max:255",
         ];
     }
 }

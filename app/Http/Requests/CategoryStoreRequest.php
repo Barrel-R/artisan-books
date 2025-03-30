@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LivroVideoStoreRequest extends FormRequest
+class CategoryStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return $this->user()->can("criar videos");
+        return $this->user()->can("criar categorias");
     }
 
     /**
@@ -22,8 +22,8 @@ class LivroVideoStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "livro_id" => "required|exists:livros,id",
-            "path" => "required|string|min:1|max:255",
+            "description" => "required|string|min:3|max:255",
+            "slug" => "nullable|string|min:1|max:60",
         ];
     }
 }

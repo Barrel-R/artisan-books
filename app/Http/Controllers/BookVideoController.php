@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Livro;
-use App\Models\LivroVideo;
-use App\Http\Requests\{LivroVideoStoreRequest, LivroVideoUpdateRequest};
-use App\Services\LivroVideoService;
+use App\Models\Book;
+use App\Models\BookVideo;
+use App\Http\Requests\{BookVideoStoreRequest, BookVideoUpdateRequest};
+use App\Services\BookVideoService;
 use Illuminate\Support\Facades\Gate;
 
-class LivroVideoController extends Controller
+class BookVideoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +21,7 @@ class LivroVideoController extends Controller
 
         return inertia(
             'Video/Index',
-            ['videos' => LivroVideo::paginate(9)->load('livro')]
+            ['videos' => BookVideo::paginate(9)->load('book')]
         );
     }
 
@@ -33,13 +33,13 @@ class LivroVideoController extends Controller
         Gate::authorize('criar videos');
 
         // TODO: adicionar livros ao cache
-        return inertia('Video/Create', ['livros' => Livro::all()]);
+        return inertia('Video/Create', ['livros' => Book::all()]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(LivroVideoStoreRequest $request, LivroVideoService $service)
+    public function store(BookVideoStoreRequest $request, BookVideoService $service)
     {
         $service->criaVideo($request);
         return to_route('videos.index');
@@ -52,7 +52,7 @@ class LivroVideoController extends Controller
     {
         Gate::authorize('ver um video');
 
-        return inertia('Video/Show', ['video' => LivroVideo::find($id)->load('livro')]);
+        return inertia('Video/Show', ['video' => BookVideo::find($id)->load('book')]);
     }
 
     /**
@@ -62,13 +62,13 @@ class LivroVideoController extends Controller
     {
         Gate::authorize('editar videos');
 
-        return inertia('Video/Edit', ['imagem' => LivroVideo::find($id)->load('livro')]);
+        return inertia('Video/Edit', ['imagem' => BookVideo::find($id)->load('book')]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(LivroVideoUpdateRequest $request, string $id, LivroVideoService $service)
+    public function update(BookVideoUpdateRequest $request, string $id, BookVideoService $service)
     {
         $service->editaVideo($request, $id);
         return to_route('videos.show', ['video' => $id]);
@@ -79,7 +79,7 @@ class LivroVideoController extends Controller
      */
     public function destroy(string $id)
     {
-        LivroVideo::destroy($id);
+        BookVideo::destroy($id);
         return to_route('videos.index');
     }
 }

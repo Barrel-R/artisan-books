@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LivroUpdateRequest extends FormRequest
+class BookImageStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return $this->user()->can("editar livros");
+        return $this->user()->can("criar imagens");
     }
 
     /**
@@ -22,10 +22,8 @@ class LivroUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "titulo" => "sometimes|string|min:3|max:255",
-            "descricao" => "sometimes|string|min:3|max:255",
-            "descricaoLonga" => "sometimes|string|min:3|max:3000",
-            "genero" => "sometimes|string|min:3|max:255",
+            "book_id" => "required|exists:books,id",
+            "path" => "required|string|min:1|max:255",
         ];
     }
 }

@@ -2,10 +2,10 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CategoriaController;
-use App\Http\Controllers\LivroController;
-use App\Http\Controllers\LivroImagemController;
-use App\Http\Controllers\LivroVideoController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\BookImageController;
+use App\Http\Controllers\BookVideoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,8 +17,8 @@ Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/admin/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::resource('livros', LivroController::class);
-    Route::resource('videos', LivroVideoController::class);
-    Route::resource('imagens', LivroImagemController::class, ['parameters' => ['imagens' => 'imagem']]);
-    Route::resource('categorias', CategoriaController::class);
+    Route::resource('livros', BookController::class);
+    Route::resource('videos', BookVideoController::class);
+    Route::resource('imagens', BookImageController::class, ['parameters' => ['imagens' => 'imagem']]);
+    Route::resource('categorias', CategoryController::class);
 });
