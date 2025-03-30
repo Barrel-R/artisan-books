@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { X } from 'lucide-vue-next';
-import Modal from "./BaseModal.vue"
+import Modal from "./BaseModal.vue";
 
 defineProps({
     book: {
@@ -33,11 +33,11 @@ defineEmits(['close']);
 
 <template>
     <Modal :show="show" maxWidth="6xl" @close="$emit('close')" :title="book.title">
-        <div class="p-6">
+        <div class="p-6 min-h-[600px]">
             <div class="flex flex-col lg:flex-row gap-8">
                 <!-- Book cover -->
                 <div class="lg:w-1/3">
-                    <div :class="`relative pt-4 ${book.backgroundColor} rounded-lg transition-all duration-300`">
+                    <div :class="`relative p-4 ${book.backgroundColor} rounded-lg transition-all duration-300`">
                         <div class="flex justify-center">
                             <img :src="book.coverImage" :alt="book.title"
                                 class="relative z-10 rounded-lg shadow-md w-full max-w-[240px] transition-transform duration-300 hover:scale-105" />
@@ -53,18 +53,18 @@ defineEmits(['close']);
                             {{ book.age }}
                         </span>
                         <span class="px-2 py-1 text-xs bg-pink-100 rounded-full text-pink-500">
-                            {{ book.pages }} pages
+                            {{ book.pages }} páginas
                         </span>
                     </div>
 
                     <div class="space-y-2">
-                        <h4 class="font-semibold text-blue-700">Description</h4>
+                        <h4 class="font-semibold text-blue-700">Descrição</h4>
                         <p class="text-blue-400">{{ book.description }}</p>
                         <p class="text-blue-400">{{ book.extendedDescription }}</p>
                     </div>
 
                     <div class="space-y-2">
-                        <h4 class="font-semibold text-blue-700">Details</h4>
+                        <h4 class="font-semibold text-blue-700">Detalhes</h4>
                         <ul class="list-disc list-inside text-blue-400 space-y-1">
                             <li>Número de páginas: {{ book.pages }}</li>
                             <li>Idade recomendada: {{ book.age }}</li>
@@ -77,7 +77,7 @@ defineEmits(['close']);
                     <div class="grid grid-cols-3 gap-2">
                         <img v-for="(img, index) in book.previewImages" :key="index" :src="img"
                             :alt="`${book.title} preview ${index + 1}`"
-                            class="object-cover w-full h-auto rounded-md transition-transform duration-300 hover:scale-105" />
+                            class="object-cover w-full h-32 rounded-md transition-transform duration-300 hover:scale-105 bg-gray-200" />
                     </div>
 
                     <div class="flex gap-4 pt-4">
