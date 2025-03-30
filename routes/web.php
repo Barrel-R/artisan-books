@@ -17,9 +17,8 @@ Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/admin/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::resource('livros', LivroController::class);
+    Route::resource('videos', LivroVideoController::class);
+    Route::resource('imagens', LivroImagemController::class, ['parameters' => ['imagens' => 'imagem']]);
+    Route::resource('categorias', CategoriaController::class);
 });
-
-Route::resource('livros', LivroController::class);
-Route::resource('videos', LivroVideoController::class);
-Route::resource('imagens', LivroImagemController::class, ['parameters' => ['imagens' => 'imagem']]);
-Route::resource('categorias', CategoriaController::class);

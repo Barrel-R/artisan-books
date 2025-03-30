@@ -1,0 +1,31 @@
+{
+    "include": [
+        "resources/js/**/*.ts",
+        "resources/js/**/*.d.ts",
+        "resources/js/**/*.vue",
+        "resources/views/**/*.vue"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "./resources/js/*"
+            ]
+        },
+        "types": [
+            "vite/client"
+        ],
+        "module": "es2022",
+        "moduleResolution": "Node",
+        "target": "esnext",
+        "strict": true,
+        "jsx": "preserve",
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowJs": true,
+        "noEmit": true
+    }
+}
