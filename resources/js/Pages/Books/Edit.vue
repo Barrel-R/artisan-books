@@ -163,7 +163,7 @@ const handleFileChange = (event: Event, type: 'images' | 'videos') => {
                             </div>
 
                             <div class="flex items-center justify-end mt-6">
-                                <Link :href="route('admin.books.index')" class="text-gray-600 hover:text-gray-900 mr-4">
+                                <Link :href="route('livros.index')" class="text-gray-600 hover:text-gray-900 mr-4">
                                 Cancel
                                 </Link>
                                 <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">

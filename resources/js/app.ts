@@ -5,6 +5,7 @@ import '../css/app.css';
 import { createApp, DefineComponent, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { ZiggyVue } from "ziggy-js"
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Gatinha Arteira';
 
@@ -17,6 +18,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, { ...props }) })
             .use(plugin)
+            .use(ZiggyVue)
             .mount(el);
     },
     progress: {

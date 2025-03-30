@@ -17,8 +17,7 @@ defineProps<{
         <template #header>
             <div class="flex justify-between items-center">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">Books</h2>
-                <Link :href="route('admin.books.create')"
-                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                <Link :href="route('livros.create')" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
                 Add New Book
                 </Link>
             </div>
@@ -68,11 +67,11 @@ defineProps<{
                                         {{ book.age_range }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <Link :href="route('admin.books.edit', book.id)"
+                                        <Link :href="route('livros.edit', book.id)"
                                             class="text-blue-600 hover:text-blue-900 mr-3">
                                         Edit
                                         </Link>
-                                        <Link :href="route('admin.books.destroy', book.id)" method="delete" as="button"
+                                        <Link :href="route('livros.destroy', book.id)" method="delete" as="button"
                                             class="text-red-600 hover:text-red-900" preserve-scroll>
                                         Delete
                                         </Link>
