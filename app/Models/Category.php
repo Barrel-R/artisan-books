@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Categoria extends Model
+class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["descricao"];
+    protected $fillable = ["description", "slug"];
 
-    public function livros(): BelongsToMany
+    public function books(): BelongsToMany
     {
-        return $this->belongsToMany(Livro::class);
+        return $this->belongsToMany(Book::class);
     }
 }

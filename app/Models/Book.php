@@ -8,29 +8,29 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Livro extends Model
+class Book extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        "titulo",
-        "descricao",
-        "descricaoLonga",
-        "genero",
+        "title",
+        "description",
+        "longDescription",
+        "gender",
     ];
 
-    public function imagens(): HasMany
+    public function images(): HasMany
     {
-        return $this->hasMany(LivroImagem::class);
+        return $this->hasMany(BookImage::class);
     }
 
     public function videos(): HasMany
     {
-        return $this->hasMany(LivroVideo::class);
+        return $this->hasMany(BookVideo::class);
     }
 
-    public function categorias(): BelongsToMany
+    public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Categoria::class);
+        return $this->belongsToMany(Category::class);
     }
 }

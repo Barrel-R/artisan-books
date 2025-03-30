@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class LivroImagem extends Model
+class BookVideo extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["livro_id", "path"];
+    protected $fillable = ["book_id", "path"];
 
-    protected $table = "imagens";
+    protected $table = "videos";
 
-    public function livro(): BelongsTo
+    public function book(): BelongsTo
     {
-        return $this->belongsTo(Livro::class);
+        return $this->belongsTo(Book::class);
     }
 }

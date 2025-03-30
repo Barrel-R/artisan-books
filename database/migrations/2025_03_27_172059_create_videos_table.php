@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
             $table->string("path");
-            $table->foreignId("livro_id")->constrained();
+            $table->foreignId("book_id")->constrained();
             $table->timestamps();
         });
     }
@@ -25,7 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table("videos", function (Blueprint $table) {
-            $table->dropForeign(["livro_id"]);
+            $table->dropForeign(["book_id"]);
         });
         Schema::dropIfExists('videos');
     }
