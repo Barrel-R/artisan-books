@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import TextArea from '@/Components/TextArea.vue';
+import { FileUpload, InputText, Textarea, Checkbox, Button, FileUploadSelectEvent } from 'primevue';
 import { Category } from '@/types';
+import { route } from "ziggy-js";
 
 interface Props {
     categories: Category[];
@@ -35,139 +32,123 @@ const submit = () => {
     });
 };
 
-const handleFileChange = (event: Event, type: 'images' | 'videos') => {
-    const input = event.target as HTMLInputElement;
-    if (input.files) {
-        form[type] = Array.from(input.files);
+const handleFileChange = (event: FileUploadSelectEvent, type: 'images' | 'videos') => {
+    if (event.files) {
+        form[type] = Array.isArray(event.files) ? event.files : [event.files];
     }
 };
 </script>
 
 <template>
 
-    <Head title="Create Book" />
+    <Head title="Criar Livro" />
 
     <AdminLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Create Book</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Criar Livro</h2>
         </template>
 
-        <div class="py-6">
+        <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-white border-b border-gray-200">
-                        <form @submit.prevent="submit">
+                <div class="shadow-sm sm:rounded-lg">
+                    <div class="p-6">
+                        <form @submit.prevent="submit" class="space-y-8">
+                            <!-- Basic Information -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <!-- Basic Information -->
                                 <div class="space-y-4">
                                     <div>
-                                        <InputLabel for="title" value="Title" />
-                                        <TextInput id="title" v-model="form.title" type="text" class="mt-1 block w-full"
-                                            required />
-                                        <InputError class="mt-2" :message="form.errors.title" />
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Título</label>
+                                        <InputText v-model="form.title" placeholder="Título"
+                                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                     </div>
-
                                     <div>
-                                        <InputLabel for="description" value="Description" />
-                                        <TextArea id="description" v-model="form.description" class="mt-1 block w-full"
-                                            required />
-                                        <InputError class="mt-2" :message="form.errors.description" />
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
+                                        <Textarea v-model="form.description" placeholder="Descrição" autoResize
+                                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                     </div>
-
                                     <div>
-                                        <InputLabel for="extended_description" value="Extended Description" />
-                                        <TextArea id="extended_description" v-model="form.extended_description"
-                                            class="mt-1 block w-full" />
-                                        <InputError class="mt-2" :message="form.errors.extended_description" />
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Descrição
+                                            Extendida</label>
+                                        <Textarea v-model="form.extended_description" placeholder="Descrição Extendida"
+                                            autoResize
+                                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                     </div>
-
                                     <div>
-                                        <InputLabel for="price" value="Price" />
-                                        <TextInput id="price" v-model="form.price" type="number" step="0.01"
-                                            class="mt-1 block w-full" required />
-                                        <InputError class="mt-2" :message="form.errors.price" />
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Preço</label>
+                                        <InputText v-model="form.price" placeholder="Preço"
+                                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                     </div>
                                 </div>
 
                                 <!-- Additional Information -->
                                 <div class="space-y-4">
                                     <div>
-                                        <InputLabel for="age_range" value="Age Range" />
-                                        <TextInput id="age_range" v-model="form.age_range" type="text"
-                                            class="mt-1 block w-full" required />
-                                        <InputError class="mt-2" :message="form.errors.age_range" />
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Faixa Etária</label>
+                                        <InputText v-model="form.age_range" placeholder="Faixa Etária"
+                                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                     </div>
-
                                     <div>
-                                        <InputLabel for="page_count" value="Page Count" />
-                                        <TextInput id="page_count" v-model="form.page_count" type="number"
-                                            class="mt-1 block w-full" required />
-                                        <InputError class="mt-2" :message="form.errors.page_count" />
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Número de
+                                            Páginas</label>
+                                        <InputText v-model="form.page_count" placeholder="Número de Páginas"
+                                            type="number"
+                                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                     </div>
-
                                     <div>
-                                        <InputLabel for="materials" value="Materials" />
-                                        <TextInput id="materials" v-model="form.materials" type="text"
-                                            class="mt-1 block w-full" required />
-                                        <InputError class="mt-2" :message="form.errors.materials" />
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Materiais</label>
+                                        <InputText v-model="form.materials" placeholder="Materiais"
+                                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                     </div>
-
                                     <div>
-                                        <InputLabel for="dimensions" value="Dimensions" />
-                                        <TextInput id="dimensions" v-model="form.dimensions" type="text"
-                                            class="mt-1 block w-full" required />
-                                        <InputError class="mt-2" :message="form.errors.dimensions" />
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Dimensões</label>
+                                        <InputText v-model="form.dimensions" placeholder="Dimensões"
+                                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                     </div>
-
                                     <div>
-                                        <InputLabel for="manufacturing_time" value="Manufacturing Time" />
-                                        <TextInput id="manufacturing_time" v-model="form.manufacturing_time" type="text"
-                                            class="mt-1 block w-full" required />
-                                        <InputError class="mt-2" :message="form.errors.manufacturing_time" />
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Tempo de
+                                            Fabricação</label>
+                                        <InputText v-model="form.manufacturing_time" placeholder="Tempo de Fabricação"
+                                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Categories -->
-                            <div class="mt-6">
-                                <InputLabel value="Categories" />
-                                <div class="mt-2 space-y-2">
-                                    <div v-for="category in categories" :key="category.id" class="flex items-center">
-                                        <input :id="`category-${category.id}`" v-model="form.categories" type="checkbox"
-                                            :value="category.id"
-                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
-                                        <label :for="`category-${category.id}`"
-                                            class="ml-2 block text-sm text-gray-900">
-                                            {{ category.name }}
-                                        </label>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Categorias</label>
+                                <div class="flex flex-wrap gap-4">
+                                    <div v-for="category in categories" :key="category.id"
+                                        class="flex items-center gap-2">
+                                        <Checkbox v-model="form.categories" :inputId="`category-${category.id}`"
+                                            :value="category.id" class="focus:ring-blue-500" />
+                                        <label :for="`category-${category.id}`" class="text-gray-700">{{ category.name
+                                            }}</label>
                                     </div>
                                 </div>
-                                <InputError class="mt-2" :message="form.errors.categories" />
                             </div>
 
                             <!-- Images -->
-                            <div class="mt-6">
-                                <InputLabel for="images" value="Images" />
-                                <input id="images" type="file" multiple accept="image/*"
-                                    @change="handleFileChange($event, 'images')" class="mt-1 block w-full" />
-                                <InputError class="mt-2" :message="form.errors.images" />
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Imagens</label>
+                                <FileUpload mode="basic" name="images" accept="image/*" :multiple="true"
+                                    @select="handleFileChange($event, 'images')" class="w-full" />
                             </div>
 
                             <!-- Videos -->
-                            <div class="mt-6">
-                                <InputLabel for="videos" value="Videos" />
-                                <input id="videos" type="file" multiple accept="video/*"
-                                    @change="handleFileChange($event, 'videos')" class="mt-1 block w-full" />
-                                <InputError class="mt-2" :message="form.errors.videos" />
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Vídeos</label>
+                                <FileUpload mode="basic" name="videos" accept="video/*" :multiple="true"
+                                    @select="handleFileChange($event, 'videos')" class="w-full" />
                             </div>
 
-                            <div class="flex items-center justify-end mt-6">
-                                <Link :href="route('livros.index')" class="text-gray-600 hover:text-gray-900 mr-4">
-                                Cancel
+                            <!-- Buttons -->
+                            <div class="flex justify-end gap-4 mt-6">
+                                <Link :href="route('livros.index')"
+                                    class="inline-flex items-center px-4 py-2 text-gray-700 rounded-md transition-colors duration-200">
+                                Cancelar
                                 </Link>
-                                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                                    Save
-                                </PrimaryButton>
+                                <Button type="submit" label="Salvar" :disabled="form.processing"
+                                    class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 disabled:opacity-50" />
                             </div>
                         </form>
                     </div>

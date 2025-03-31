@@ -14,12 +14,15 @@
         "tailwindcss": "^4.0.0",
         "typescript": "^5.8.2",
         "vite": "^6.0.11",
-        "vue-tsc": "^2.2.8"
+        "vue-tsc": "^2.2.8",
+        "ziggy-js": "^2.5.2"
     },
     "dependencies": {
         "@inertiajs/vue3": "^2.0.5",
+        "@primeuix/themes": "^1.0.0",
         "@vitejs/plugin-vue": "^5.2.3",
         "lucide-vue-next": "^0.485.0",
+        "primevue": "^4.3.3",
         "vue": "^3.5.13"
     }
 }

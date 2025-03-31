@@ -16,6 +16,7 @@ Route::get('/admin/login', [AuthController::class, 'showLoginForm'])->name('admi
 Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login');
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/painel', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/logout', [AuthController::class, 'logout'])->name('logout');
     Route::resource('livros', BookController::class);
     Route::resource('videos', BookVideoController::class);

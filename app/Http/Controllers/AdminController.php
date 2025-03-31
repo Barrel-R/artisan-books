@@ -8,4 +8,9 @@ class AdminController extends Controller
     {
         return inertia("Admin/Index");
     }
+
+    public function dashboard()
+    {
+        return inertia("Admin/Dashboard");
+    }
 }

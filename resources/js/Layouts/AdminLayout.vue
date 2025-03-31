@@ -1,164 +1,93 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
-import { LayoutDashboard, LucideIcon, NotebookPen, Tag } from 'lucide-vue-next';
-import { route, RouteName } from 'ziggy-js/src/js';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 
-interface Props {
-    title?: string;
-}
+// PrimeVue Components
+import Drawer from 'primevue/sidebar';
+import Menu from 'primevue/menu';
+import Button from 'primevue/button';
+import Avatar from 'primevue/avatar';
+import Badge from 'primevue/badge';
+import ConfirmDialog from 'primevue/confirmdialog';
+import { Book, Home, Tag } from 'lucide-vue-next';
 
-defineProps<Props>();
+const userMenu = ref();
+const sidebarVisible = ref(true);
+const isAuthenticated = ref(false);
 
-const sidebarOpen = ref(false);
+const menuItems = ref([
+    {
+        label: 'Dashboard',
+        icon: "pi pi-home",
+        href: '/painel'
+    },
+    {
+        label: 'Books',
+        icon: "pi pi-book",
+        href: '/livros'
+    },
+    {
+        label: 'Categorias',
+        icon: "pi pi-tag",
+        href: '/categorias'
+    }
+]);
+
 const toggleSidebar = () => {
-    sidebarOpen.value = !sidebarOpen.value;
+    sidebarVisible.value = !sidebarVisible.value;
 };
 
-// Navigation items with type safety
-interface NavItem {
-    name: string;
-    href: RouteName | string;
-    icon: LucideIcon;
-    current: boolean;
-}
 
-const navigation = computed<NavItem[]>(() => [
-    {
-        name: 'Dashboard',
-        href: "/dashboard",
-        icon: LayoutDashboard,
-        current: route().current('admin.dashboard')
-    },
-    {
-        name: 'Books',
-        href: "/livros",
-        icon: NotebookPen,
-        current: route().current('books.*')
-    },
-    {
-        name: 'Categories',
-        href: "/categorias",
-        icon: Tag,
-        current: route().current('categories.*')
-    },
-]);
+onMounted(() => {
+    // For demo purposes, auto-login after 1 second
+    setTimeout(() => {
+        isAuthenticated.value = true;
+    }, 1000);
+});
 </script>
-
 <template>
-
-    <Head :title="title ? `${title} | Admin` : 'Admin'" />
-
     <div class="min-h-screen bg-gray-100">
-        <!-- Mobile sidebar -->
-        <div class="lg:hidden">
-            <div class="fixed inset-0 flex z-40">
-                <Transition enter-active-class="transition-opacity ease-linear duration-300"
-                    enter-from-class="opacity-0" enter-to-class="opacity-100"
-                    leave-active-class="transition-opacity ease-linear duration-300" leave-from-class="opacity-100"
-                    leave-to-class="opacity-0">
-                    <div v-show="sidebarOpen" class="fixed inset-0" @click="toggleSidebar">
-                        <div class="absolute inset-0 bg-gray-600 opacity-75"></div>
-                    </div>
-                </Transition>
+        <div class="flex h-screen overflow-hidden">
+            <ConfirmDialog />
 
-                <Transition enter-active-class="transition ease-in-out duration-300 transform"
-                    enter-from-class="-translate-x-full" enter-to-class="translate-x-0"
-                    leave-active-class="transition ease-in-out duration-300 transform" leave-from-class="translate-x-0"
-                    leave-to-class="-translate-x-full">
-                    <div v-show="sidebarOpen" class="relative flex-1 flex flex-col max-w-xs w-full bg-gray-800">
-                        <div class="absolute top-0 right-0 -mr-14 p-1">
-                            <button type="button"
-                                class="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600"
-                                @click="toggleSidebar">
-                                <svg class="h-6 w-6 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
-                            <div class="flex-shrink-0 flex items-center px-4">
-                                <h1 class="text-white text-xl font-bold">Gatinha Arteira</h1>
-                            </div>
-                            <nav class="mt-5 px-2 space-y-1">
-                                <Link v-for="item in navigation" :key="item.name" :href="item.href"
-                                    :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']">
-                                {{ item.icon }}
-                                {{ item.name }}
-                                </Link>
-                            </nav>
+            <!-- Drawer -->
+            <Drawer v-model:visible="sidebarVisible" :modal="false" :showCloseIcon="false" class="p-sidebar-sm">
+                <div class="flex flex-col h-full">
+                    <div class="p-4 border-b border-gray-200">
+                        <div class="flex items-center justify-center">
+                            <!-- <img src="/placeholder.svg?height=40&width=40" alt="Logo" class="h-10 w-10" /> -->
+                            <h1 class="ml-2 text-xl font-bold text-pink-500">Livros</h1>
                         </div>
                     </div>
-                </Transition>
-                <div class="flex-shrink-0 w-14"></div>
-            </div>
-        </div>
 
-        <!-- Static sidebar for desktop -->
-        <div class="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
-            <div class="flex-1 flex flex-col min-h-0 bg-gray-800">
-                <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-                    <div class="flex items-center flex-shrink-0 px-4">
-                        <h1 class="text-white text-xl font-bold">Gatinha Arteira</h1>
-                    </div>
-                    <nav class="mt-5 flex-1 px-2 space-y-1">
-                        <Link v-for="item in navigation" :key="item.name" :href="item.href"
-                            :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
-                        <svg v-if="item.icon" class="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-300"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="item.icon" />
-                        </svg>
-                        {{ item.name }}
-                        </Link>
-                    </nav>
-                </div>
-            </div>
-        </div>
-
-        <!-- Main content -->
-        <div class="lg:pl-64 flex flex-col">
-            <!-- Mobile top navigation -->
-            <div class="sticky top-0 z-10 lg:hidden pl-1 pt-1 sm:pl-3 sm:pt-3 bg-gray-100">
-                <button type="button"
-                    class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-                    @click="toggleSidebar">
-                    <span class="sr-only">Open sidebar</span>
-                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
-            </div>
-
-            <!-- Header and content -->
-            <main class="flex-1">
-                <!-- Header slot -->
-                <div class="bg-white shadow-sm">
-                    <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-                        <slot name="header" />
+                    <div class="flex-grow overflow-y-auto">
+                        <Menu :model="menuItems" class="border-none w-full" />
                     </div>
                 </div>
+            </Drawer>
 
-                <!-- Main content slot -->
-                <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-                    <slot />
-                </div>
-            </main>
+            <!-- Main Content -->
+            <div class="flex flex-col flex-1 w-full overflow-hidden">
+                <!-- Header -->
+                <header class="bg-white shadow-sm">
+                    <div class="flex items-center justify-between p-4">
+                        <Button @click="toggleSidebar" icon="pi pi-bars" class="p-button-text p-button-rounded" />
+
+                        <div class="flex items-center space-x-4">
+                            <span class="relative">
+                                <i class="pi pi-bell text-gray-600 text-xl cursor-pointer"></i>
+                            </span>
+
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Main Content Area -->
+                <main class="flex-1 overflow-y-auto p-4">
+                    <div class="max-w-7xl mx-auto">
+                        <slot />
+                    </div>
+                </main>
+            </div>
         </div>
     </div>
 </template>
-
-<style scoped>
-/* Smooth transitions for sidebar */
-.slide-enter-active,
-.slide-leave-active {
-    transition: transform 0.3s ease;
-}
-
-.slide-enter-from,
-.slide-leave-to {
-    transform: translateX(-100%);
-}
-</style>

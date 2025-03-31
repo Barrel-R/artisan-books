@@ -2,6 +2,7 @@
 import { Head, Link } from '@inertiajs/vue3';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import { Book } from '@/types';
+import { route } from "ziggy-js"
 
 defineProps<{
     books: Book[];
@@ -17,8 +18,9 @@ defineProps<{
         <template #header>
             <div class="flex justify-between items-center">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">Books</h2>
-                <Link :href="route('livros.create')" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
-                Add New Book
+                <Link :href="route('livros.create')"
+                    class="bg-blue-400 hover:bg-blue-500 transition-colors duration-300 ease-in-out text-white px-4 py-2 rounded">
+                Adicionar novo livro
                 </Link>
             </div>
         </template>
@@ -36,16 +38,16 @@ defineProps<{
                                 <tr>
                                     <th
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Title</th>
+                                        Título</th>
                                     <th
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Price</th>
+                                        Preço</th>
                                     <th
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Age Range</th>
+                                        Idade</th>
                                     <th
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Actions</th>
+                                        Ações</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">

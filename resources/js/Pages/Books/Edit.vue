@@ -5,7 +5,6 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import TextArea from '@/Components/TextArea.vue';
 import { Book, Category } from '@/types';
 
 interface Props {
@@ -70,14 +69,14 @@ const handleFileChange = (event: Event, type: 'images' | 'videos') => {
 
                                     <div>
                                         <InputLabel for="description" value="Description" />
-                                        <TextArea id="description" v-model="form.description" class="mt-1 block w-full"
-                                            required />
+                                        <textarea id="description" v-model="form.description"
+                                            class="mt-1 block w-full" />
                                         <InputError class="mt-2" :message="form.errors.description" />
                                     </div>
 
                                     <div>
                                         <InputLabel for="extended_description" value="Extended Description" />
-                                        <TextArea id="extended_description" v-model="form.extended_description"
+                                        <textarea id="extended_description" v-model="form.extended_description"
                                             class="mt-1 block w-full" />
                                         <InputError class="mt-2" :message="form.errors.extended_description" />
                                     </div>

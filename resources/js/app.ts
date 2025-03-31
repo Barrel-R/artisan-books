@@ -6,6 +6,8 @@ import { createApp, DefineComponent, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from "ziggy-js"
+import PrimeVue from 'primevue/config';
+import Aura from "@primeuix/themes/aura"
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Gatinha Arteira';
 
@@ -19,6 +21,7 @@ createInertiaApp({
         createApp({ render: () => h(App, { ...props }) })
             .use(plugin)
             .use(ZiggyVue)
+            .use(PrimeVue, { preset: Aura })
             .mount(el);
     },
     progress: {
