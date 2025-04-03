@@ -10,7 +10,6 @@ use App\Models\BookImage;
 use App\Models\BookVideo;
 use App\Services\BookService;
 use App\Services\CategoryService;
-use Inertia\Inertia;
 
 class BookController extends Controller
 {
@@ -24,7 +23,8 @@ class BookController extends Controller
     public function index()
     {
         $books = $this->bookService->getAllBooks();
-        return Inertia::render('Books/Index', [
+
+        return inertia('Books/Index', [
             'books' => $books,
             'status' => session('status'),
         ]);
@@ -32,7 +32,7 @@ class BookController extends Controller
 
     public function create(CategoryService $service)
     {
-        return Inertia::render('Books/Create', [
+        return inertia('Books/Create', [
             'categories' => $service->getAllCategories(),
         ]);
     }
@@ -59,7 +59,7 @@ class BookController extends Controller
 
     public function edit(Book $book, CategoryService $service)
     {
-        return Inertia::render('Books/Edit', [
+        return inertia('Books/Edit', [
             'book' => $book->load(['images', 'videos', 'categories']),
             'categories' => $service->getAllCategories(),
         ]);

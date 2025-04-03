@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Livro;
-use App\Models\LivroVideo;
+use App\Models\Book;
+use App\Models\BookVideo;
 use App\Models\User;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -30,7 +30,7 @@ beforeEach(function () {
 });
 
 test("página de vídeos pode ser vista", function () {
-    LivroVideo::factory()->create();
+    BookVideo::factory()->create();
 
     $response = $this->actingAs($this->admin)->get("/videos");
 
@@ -38,7 +38,7 @@ test("página de vídeos pode ser vista", function () {
 });
 
 test("vídeo pode ser criado", function () {
-    $livro = Livro::factory()->create();
+    $livro = Book::factory()->create();
 
     $video = ["path" => "/age10/test/", "livro_id" => $livro->id];
 
@@ -48,7 +48,7 @@ test("vídeo pode ser criado", function () {
 });
 
 test("vídeo pode ser visto", function () {
-    $video = LivroVideo::factory()->create();
+    $video = BookVideo::factory()->create();
 
     $response = $this->actingAs($this->admin)->get("/videos/$video->id");
 
@@ -56,7 +56,7 @@ test("vídeo pode ser visto", function () {
 });
 
 test("video pode ser editado", function () {
-    $video = LivroVideo::factory()->create();
+    $video = BookVideo::factory()->create();
 
     $novoVideo = ["path" => "/newpath/"];
 
@@ -70,7 +70,7 @@ test("video pode ser editado", function () {
 });
 
 test("video pode ser deletado", function () {
-    $video = LivroVideo::factory()->create();
+    $video = BookVideo::factory()->create();
 
     $response = $this->actingAs($this->admin)->delete("/videos/$video->id");
 

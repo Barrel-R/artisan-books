@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Livro;
-use App\Models\LivroImagem;
+use App\Models\Book;
+use App\Models\BookImage;
 use App\Models\User;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -30,7 +30,7 @@ beforeEach(function () {
 });
 
 test("página de imagens pode ser vista", function () {
-    LivroImagem::factory()->create();
+    BookImage::factory()->for(Book::factory()->create())->create();
 
     $response = $this->actingAs($this->admin)->get("/imagens");
 
@@ -38,7 +38,7 @@ test("página de imagens pode ser vista", function () {
 });
 
 test("imagem pode ser criada", function () {
-    $livro = Livro::factory()->create();
+    $livro = BookImage::factory()->for(Book::factory()->create())->create();
 
     $imagem = ["path" => "/age12/test-image/", "livro_id" => $livro->id];
 
@@ -48,7 +48,7 @@ test("imagem pode ser criada", function () {
 });
 
 test("imagem pode ser vista", function () {
-    $imagem = LivroImagem::factory()->create();
+    $imagem = BookImage::factory()->for(Book::factory()->create())->create();
 
     $response = $this->actingAs($this->admin)->get("/imagens/$imagem->id");
 
@@ -56,7 +56,7 @@ test("imagem pode ser vista", function () {
 });
 
 test("imagem pode ser editada", function () {
-    $imagem = LivroImagem::factory()->create();
+    $imagem = BookImage::factory()->for(Book::factory()->create())->create();
 
     $novaImagem = ["path" => "/newpath323/"];
 
@@ -70,7 +70,7 @@ test("imagem pode ser editada", function () {
 });
 
 test("imagem pode ser deletada", function () {
-    $imagem = LivroImagem::factory()->create();
+    $imagem = BookImage::factory()->for(Book::factory()->create())->create();
 
     $response = $this->actingAs($this->admin)->delete("/imagens/$imagem->id");
 

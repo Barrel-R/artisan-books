@@ -14,12 +14,13 @@ class BookStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|max:255',
-            'description' => 'required|string|min:3|max:255',
+            'title' => 'required|string|max:100',
+            'description' => 'required|string|min:3|max:500',
             'long_description' => 'nullable|string|min:3',
             'price' => 'required|numeric|min:1|decimal:2',
             'age_range' => 'required|string|max:50',
             'page_count' => 'required|integer|min:1',
+            'gender' => 'required|string|min:1|max:100',
             'materials' => 'nullable|string',
             'dimensions' => 'required|string|max:100',
             'manufacturing_time' => 'required|string|max:100',

@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Book;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +17,6 @@ class BookVideoFactory extends Factory
     public function definition(): array
     {
         return [
-            "book_id" => Book::factory(),
             "path" => fake()->filePath(),
         ];
     }

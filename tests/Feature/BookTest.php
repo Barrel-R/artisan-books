@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Categoria;
+use App\Models\Category;
 use App\Models\Book;
 use App\Models\BookImage;
 use App\Models\BookVideo;
@@ -81,7 +81,7 @@ test("livro pode ser deletado", function () {
 
 test("livro pode ter videos", function () {
     $livro = Book::factory()->create();
-    $video = LivroVideo::factory()->create();
+    $video = BookVideo::factory()->for($livro)->create();
 
     $livro->videos()->save($video);
 
@@ -91,20 +91,20 @@ test("livro pode ter videos", function () {
 
 test("livro pode ter imagens", function () {
     $livro = Book::factory()->create();
-    $imagem = BookImage::factory()->create();
+    $imagem = BookImage::factory()->for($livro)->create();
 
-    $livro->imagens()->save($imagem);
+    $livro->images()->save($imagem);
 
-    expect($livro->imagens()->count())->toBe(1);
-    expect($livro->imagens()->first()->id)->toBe($imagem->id);
+    expect($livro->images()->count())->toBe(1);
+    expect($livro->images()->first()->id)->toBe($imagem->id);
 });
 
-test("livro pode ter categorias", function () {
+test("livro pode ter categories", function () {
     $livro = Book::factory()->create();
-    $categoria = Categoria::factory()->create();
+    $categoria = Category::factory()->create();
 
-    $livro->categorias()->attach($categoria->id);
+    $livro->categories()->attach($categoria->id);
 
-    expect($livro->categorias()->count())->toBe(1);
-    expect($livro->categorias()->first()->id)->toBe($categoria->id);
+    expect($livro->categories()->count())->toBe(1);
+    expect($livro->categories()->first()->id)->toBe($categoria->id);
 });

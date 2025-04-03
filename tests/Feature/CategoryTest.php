@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Categoria;
+use App\Models\Category;
 use App\Models\User;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -29,7 +29,7 @@ beforeEach(function () {
 });
 
 test("página de categorias pode ser vista", function () {
-    Categoria::factory()->create();
+    Category::factory()->create();
 
     $response = $this->actingAs($this->admin)->get("/categorias");
 
@@ -45,7 +45,7 @@ test("categoria pode ser criada", function () {
 });
 
 test("categoria pode ser vista", function () {
-    $categoria = Categoria::factory()->create();
+    $categoria = Category::factory()->create();
 
     $response = $this->actingAs($this->admin)->get("/categorias/$categoria->id");
 
@@ -53,7 +53,7 @@ test("categoria pode ser vista", function () {
 });
 
 test("categoria pode ser editada", function () {
-    $categoria = Categoria::factory()->create();
+    $categoria = Category::factory()->create();
 
     $novaCategoria = ["descricao" => "novacategoria"];
 
@@ -67,7 +67,7 @@ test("categoria pode ser editada", function () {
 });
 
 test("categoria pode ser deletada", function () {
-    $categoria = Categoria::factory()->create();
+    $categoria = Category::factory()->create();
 
     $response = $this->actingAs($this->admin)->delete("/categorias/$categoria->id");
 

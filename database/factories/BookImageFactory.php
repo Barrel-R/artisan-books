@@ -18,7 +18,6 @@ class BookImageFactory extends Factory
     public function definition(): array
     {
         return [
-            "book_id" => Book::factory(),
             "path" => fake()->filePath(),
         ];
     }

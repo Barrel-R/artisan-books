@@ -2,9 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\BookImage;
-use App\Models\BookVideo;
-use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,17 +18,15 @@ class BookFactory extends Factory
     {
         return [
             'title' => fake()->title(),
-            'description' => fake()->paragraph(),
-            'long_description' => fake()->paragraphs(5),
+            'description' => fake()->text(100),
+            'long_description' => fake()->paragraphs(3, true),
+            'gender' => fake()->text(50),
             'price' => fake()->numerify("##.##"),
             'age_range' => fake()->text(),
-            'page_count' => fake()->randomNumber(100),
+            'page_count' => fake()->randomNumber(2),
             'materials' => fake()->text(),
             'dimensions' => fake()->text(),
             'manufacturing_time' => fake()->text(),
-            'categories' => Category::factory(),
-            'images' => BookImage::factory(),
-            'videos' => BookVideo::factory(),
         ];
     }
 }

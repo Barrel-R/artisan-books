@@ -38,7 +38,6 @@ class BookService
 
     public function deleteBook(Book $book)
     {
-        // Delete associated images and videos
         $this->deleteAllImages($book);
         $this->deleteAllVideos($book);
 
