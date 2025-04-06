@@ -9,25 +9,39 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
-        return inertia('Admin/Login');
+        return inertia('Login');
     }
 
     public function login(Request $request)
     {
-        $username = $request->input('username');
-        $password = $request->input('password');
+        $credentials = $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ]);
 
-        if ($username === env('ADMIN_USERNAME') && Hash::check($password, env('ADMIN_PASSWORD'))) {
-            session(['admin_logged_in' => true]);
-            return redirect('/admin');
+        // Get values from config, not env directly
+        $adminUsername = config('admin.username');
+        $adminPassword = config('admin.password');
+
+        if (
+            $credentials['username'] === $adminUsername &&
+            Hash::check($credentials['password'], $adminPassword)
+        ) {
+
+            // Store admin session with expiration
+            $request->session()->put('admin_logged_in', true);
+
+            return redirect('/admin/dashboard');
         }
 
-        return redirect('admin/login')->withErrors(['Credenciais inválidas']);
+        return back()->withErrors([
+            'username' => 'Credenciais inválidas.',
+        ]);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        session(['admin_logged_in' => false]);
+        $request->session()->forget('admin_logged_in');
         return redirect('/');
     }
 }

@@ -1,31 +1,20 @@
 {
-    "include": [
-        "resources/js/**/*.ts",
-        "resources/js/**/*.d.ts",
-        "resources/js/**/*.vue",
-        "resources/views/**/*.vue"
-    ],
-    "exclude": [
-        "node_modules"
-    ],
     "compilerOptions": {
-        "baseUrl": ".",
-        "paths": {
-            "@/*": [
-                "./resources/js/*"
-            ]
-        },
-        "types": [
-            "vite/client"
-        ],
-        "module": "es2022",
-        "moduleResolution": "Node",
-        "target": "esnext",
-        "strict": true,
-        "jsx": "preserve",
-        "skipLibCheck": true,
-        "esModuleInterop": true,
         "allowJs": true,
-        "noEmit": true
-    }
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "jsx": "preserve",
+        "strict": true,
+        "isolatedModules": true,
+        "target": "ESNext",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "noEmit": true,
+        "skipLibCheck": true,
+        "paths": {
+            "@/*": ["./resources/js/*"],
+            "ziggy-js": ["./vendor/tightenco/ziggy"]
+        }
+    },
+    "include": ["resources/js/**/*.ts", "resources/js/**/*.vue"]
 }
