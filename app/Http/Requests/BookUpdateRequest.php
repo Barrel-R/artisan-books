@@ -3,12 +3,13 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class BookUpdateRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->can("editar livros");
+        return Auth::check();
     }
 
     public function rules()

@@ -15,8 +15,14 @@ class Book extends Model
     protected $fillable = [
         "title",
         "description",
-        "longDescription",
+        "long_description",
         "gender",
+        "price",
+        "age_range",
+        "page_count",
+        "materials",
+        "dimensions",
+        "manufacturing_time",
     ];
 
     public function images(): HasMany

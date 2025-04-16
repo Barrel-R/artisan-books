@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryUpdateRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class CategoryUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can("editar categorias");
+        return Auth::check();
     }
 
     /**

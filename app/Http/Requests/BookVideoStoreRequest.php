@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class BookVideoStoreRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class BookVideoStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can("criar videos");
+        return Auth::check();
     }
 
     /**

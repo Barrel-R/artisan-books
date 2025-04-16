@@ -2,30 +2,9 @@
 
 use App\Models\Category;
 use App\Models\User;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 beforeEach(function () {
-    $permissions = [
-        ["name" => "ver categorias", "guard_name" => "web"],
-        ["name" => "ver uma categoria", "guard_name" => "web"],
-        ["name" => "criar categorias", "guard_name" => "web"],
-        ["name" => "editar categorias", "guard_name" => "web"],
-        ["name" => "deletar categorias", "guard_name" => "web"],
-    ];
-
-    $userPermissions = [
-        "ver categorias",
-        "ver uma categoria",
-        "criar categorias",
-        "editar categorias",
-        "deletar categorias",
-    ];
-
-    Permission::insert($permissions);
-    Role::create(['name' => 'Admin', 'guard_name' => 'web'])->givePermissionTo($userPermissions);
-
-    $this->admin = User::factory()->create()->assignRole("Admin");
+    $this->admin = User::factory()->create();
 });
 
 test("página de categorias pode ser vista", function () {
@@ -37,7 +16,7 @@ test("página de categorias pode ser vista", function () {
 });
 
 test("categoria pode ser criada", function () {
-    $categoria = ["descricao" => "createTest",];
+    $categoria = ["description" => "createTest", "slug" => fake()->slug()];
 
     $response = $this->actingAs($this->admin)->post("/categorias", $categoria);
 
@@ -55,13 +34,13 @@ test("categoria pode ser vista", function () {
 test("categoria pode ser editada", function () {
     $categoria = Category::factory()->create();
 
-    $novaCategoria = ["descricao" => "novacategoria"];
+    $novaCategoria = ["description" => "novacategoria"];
 
     $response = $this->actingAs($this->admin)->patch("/categorias/$categoria->id", $novaCategoria);
 
     $categoria->refresh();
 
-    expect($categoria->descricao)->toBe($novaCategoria["descricao"]);
+    expect($categoria->description)->toBe($novaCategoria["description"]);
 
     $response->assertSessionHasNoErrors()->assertRedirect("/categorias/$categoria->id");
 });

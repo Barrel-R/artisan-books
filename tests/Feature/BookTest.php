@@ -5,30 +5,9 @@ use App\Models\Book;
 use App\Models\BookImage;
 use App\Models\BookVideo;
 use App\Models\User;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 beforeEach(function () {
-    $permissions = [
-        ["name" => "ver livros", "guard_name" => "web"],
-        ["name" => "ver um livro", "guard_name" => "web"],
-        ["name" => "criar livros", "guard_name" => "web"],
-        ["name" => "editar livros", "guard_name" => "web"],
-        ["name" => "deletar livros", "guard_name" => "web"],
-    ];
-
-    $userPermissions = [
-        "ver livros",
-        "ver um livro",
-        "criar livros",
-        "editar livros",
-        "deletar livros",
-    ];
-
-    Permission::insert($permissions);
-    Role::create(['name' => 'Admin', 'guard_name' => 'web'])->givePermissionTo($userPermissions);
-
-    $this->admin = User::factory()->create()->assignRole("Admin");
+    $this->admin = User::factory()->create();
 });
 
 test("página de livros pode ser vista", function () {
@@ -48,19 +27,29 @@ test("livro pode ser visto", function () {
 });
 
 test("livro pode ser criado", function () {
-    $livro = ["titulo" => "Um livro", "descricao" => "sobre gatinhos", "descricaoLonga" => "Um livro interativo com vários gatos sobre alguma história muito interessante", "genero" => "Masculino"];
+    $livro = [
+        "title" => "Um livro",
+        "description" => "sobre gatinhos",
+        "long_description" => "Um livro interativo com vários gatos sobre alguma história muito interessante",
+        "gender" => "Masculino",
+        "price" => 33.99,
+        "age_range" => "3-5 anos",
+        "page_count" => "35",
+        "dimensions" => "90x35",
+        "manufacturing_time" => "3 dias",
+    ];
 
     $response = $this->actingAs($this->admin)->post("/livros", $livro);
 
     $response->assertSessionHasNoErrors()->assertRedirect("/livros");
 
-    $this->assertDatabaseHas("livros", $livro);
+    $this->assertDatabaseHas("books", $livro);
 });
 
 test("livro pode ser editado", function () {
     $livro = Book::factory()->create();
 
-    $novoLivro = ["titulo" => "Um novo titulo"];
+    $novoLivro = ["title" => "Um novo title"];
 
     $response = $this->actingAs($this->admin)->patch("/livros/$livro->id", $novoLivro);
 
@@ -68,7 +57,7 @@ test("livro pode ser editado", function () {
 
     $response->assertSessionHasNoErrors()->assertRedirect("/livros/$livro->id");
 
-    expect($livro->titulo)->toBe($novoLivro['titulo']);
+    expect($livro->title)->toBe($novoLivro['title']);
 });
 
 test("livro pode ser deletado", function () {

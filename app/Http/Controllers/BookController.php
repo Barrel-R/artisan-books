@@ -8,6 +8,7 @@ use App\Http\Requests\BookUpdateRequest;
 use App\Models\Book;
 use App\Models\BookImage;
 use App\Models\BookVideo;
+use App\Models\Category;
 use App\Services\BookService;
 use App\Services\CategoryService;
 
@@ -30,6 +31,14 @@ class BookController extends Controller
         ]);
     }
 
+    public function show(Category $category)
+    {
+        return inertia('Books/Show', [
+            'category' => $category,
+        ]);
+    }
+
+
     public function create(CategoryService $service)
     {
         return inertia('Books/Create', [
@@ -39,21 +48,9 @@ class BookController extends Controller
 
     public function store(BookStoreRequest $request)
     {
-        $book = $this->bookService->createBook($request->validated());
+        $book = $this->bookService->createBook($request);
 
-        if ($request->has('images')) {
-            foreach ($request->file('images') as $image) {
-                $this->bookService->addImage($book, $image);
-            }
-        }
-
-        if ($request->has('videos')) {
-            foreach ($request->file('videos') as $video) {
-                $this->bookService->addVideo($book, $video);
-            }
-        }
-
-        return redirect()->route('books.index')
+        return redirect()->route('livros.index')
             ->with('status', 'Book created successfully');
     }
 
@@ -65,23 +62,13 @@ class BookController extends Controller
         ]);
     }
 
-    public function update(BookUpdateRequest $request, Book $book)
+    public function update(BookUpdateRequest $request, string $id)
     {
-        $this->bookService->updateBook($book, $request->validated());
+        $book = Book::findOrFail($id);
 
-        if ($request->has('images')) {
-            foreach ($request->file('images') as $image) {
-                $this->bookService->addImage($book, $image);
-            }
-        }
+        $this->bookService->updateBook($request, $book);
 
-        if ($request->has('videos')) {
-            foreach ($request->file('videos') as $video) {
-                $this->bookService->addVideo($book, $video);
-            }
-        }
-
-        return redirect()->route('livros.index')
+        return redirect()->route('livros.show', ["livro" => $id])
             ->with('status', 'Book updated successfully');
     }
 

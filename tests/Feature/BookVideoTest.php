@@ -3,34 +3,13 @@
 use App\Models\Book;
 use App\Models\BookVideo;
 use App\Models\User;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 beforeEach(function () {
-    $permissions = [
-        ["name" => "ver videos", "guard_name" => "web"],
-        ["name" => "ver um video", "guard_name" => "web"],
-        ["name" => "criar videos", "guard_name" => "web"],
-        ["name" => "editar videos", "guard_name" => "web"],
-        ["name" => "deletar videos", "guard_name" => "web"],
-    ];
-
-    $userPermissions = [
-        "ver videos",
-        "ver um video",
-        "criar videos",
-        "editar videos",
-        "deletar videos",
-    ];
-
-    Permission::insert($permissions);
-    Role::create(['name' => 'Admin', 'guard_name' => 'web'])->givePermissionTo($userPermissions);
-
-    $this->admin = User::factory()->create()->assignRole("Admin");
+    $this->admin = User::factory()->create();
 });
 
 test("página de vídeos pode ser vista", function () {
-    BookVideo::factory()->create();
+    BookVideo::factory()->for(Book::factory()->create())->create();
 
     $response = $this->actingAs($this->admin)->get("/videos");
 
@@ -40,7 +19,7 @@ test("página de vídeos pode ser vista", function () {
 test("vídeo pode ser criado", function () {
     $livro = Book::factory()->create();
 
-    $video = ["path" => "/age10/test/", "livro_id" => $livro->id];
+    $video = ["path" => "/age10/test/", "book_id" => $livro->id];
 
     $response = $this->actingAs($this->admin)->post("/videos", $video);
 
@@ -48,7 +27,8 @@ test("vídeo pode ser criado", function () {
 });
 
 test("vídeo pode ser visto", function () {
-    $video = BookVideo::factory()->create();
+    $video = BookVideo::factory()->for(Book::factory()->create())->create();
+
 
     $response = $this->actingAs($this->admin)->get("/videos/$video->id");
 
@@ -56,7 +36,7 @@ test("vídeo pode ser visto", function () {
 });
 
 test("video pode ser editado", function () {
-    $video = BookVideo::factory()->create();
+    $video = BookVideo::factory()->for(Book::factory()->create())->create();
 
     $novoVideo = ["path" => "/newpath/"];
 
@@ -70,7 +50,7 @@ test("video pode ser editado", function () {
 });
 
 test("video pode ser deletado", function () {
-    $video = BookVideo::factory()->create();
+    $video = BookVideo::factory()->for(Book::factory()->create())->create();
 
     $response = $this->actingAs($this->admin)->delete("/videos/$video->id");
 

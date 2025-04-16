@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Http\Requests\BookStoreRequest;
+use App\Http\Requests\BookUpdateRequest;
 use App\Models\Book;
 use App\Models\BookImage;
 use App\Models\BookVideo;
@@ -14,9 +16,21 @@ class BookService
         return Book::with(['images', 'videos', 'categories'])->latest()->get();
     }
 
-    public function createBook(array $data)
+    public function createBook(BookStoreRequest $request)
     {
-        $book = Book::create($data);
+        $book = Book::create($request->validated());
+
+        if ($request->has('images')) {
+            foreach ($request->file('images') as $image) {
+                $this->addImage($book, $image);
+            }
+        }
+
+        if ($request->has('videos')) {
+            foreach ($request->file('videos') as $video) {
+                $this->addVideo($book, $video);
+            }
+        }
 
         if (isset($data['categories'])) {
             $book->categories()->sync($data['categories']);
@@ -25,9 +39,21 @@ class BookService
         return $book;
     }
 
-    public function updateBook(Book $book, array $data)
+    public function updateBook(BookUpdateRequest $request, Book $book)
     {
-        $book->update($data);
+        if ($request->has('images')) {
+            foreach ($request->file('images') as $image) {
+                $this->addImage($book, $image);
+            }
+        }
+
+        if ($request->has('videos')) {
+            foreach ($request->file('videos') as $video) {
+                $this->addVideo($book, $video);
+            }
+        }
+
+        $book->update($request->validated());
 
         if (isset($data['categories'])) {
             $book->categories()->sync($data['categories']);

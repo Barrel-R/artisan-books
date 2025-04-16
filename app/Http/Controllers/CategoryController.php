@@ -54,8 +54,10 @@ class CategoryController extends Controller
      */
     public function update(CategoryUpdateRequest $request, string $id, CategoryService $service)
     {
-        $service->updateCategory($request, $id);
-        return to_route('categorias.show', ['categoria' => $id]);
+        $category = Category::findOrFail($id);
+
+        $service->updateCategory($request, $category);
+        return to_route('categorias.show', ['categoria' => $category]);
     }
 
     /**

@@ -18,7 +18,7 @@ class BookImageController extends Controller
 
         return inertia(
             'Images/Index',
-            ['images' => BookImage::paginate(9)->load('livro')]
+            ['images' => BookImage::paginate(9)->load('book')]
         );
     }
 
@@ -37,7 +37,7 @@ class BookImageController extends Controller
     public function store(BookImageStoreRequest $request, BookImageService $service)
     {
         $service->criaImagem($request);
-        return to_route('images.index');
+        return to_route('imagens.index');
     }
 
     /**
@@ -45,7 +45,7 @@ class BookImageController extends Controller
      */
     public function show(string $id)
     {
-        return inertia('Images/Show', ['imagem' => BookImage::find($id)->load('livro')]);
+        return inertia('Images/Show', ['imagem' => BookImage::find($id)->load('book')]);
     }
 
     /**
@@ -53,7 +53,7 @@ class BookImageController extends Controller
      */
     public function edit(string $id)
     {
-        return inertia('Imagems/Edit', ['imagem' => BookImage::find($id)->load('livro')]);
+        return inertia('Imagems/Edit', ['imagem' => BookImage::find($id)->load('book')]);
     }
 
     /**
@@ -62,7 +62,7 @@ class BookImageController extends Controller
     public function update(BookImageUpdateRequest $request, string $id, BookImageService $service)
     {
         $service->editaImagem($request, $id);
-        return to_route('images.show', ['imagem' => $id]);
+        return to_route('imagens.show', ['imagem' => $id]);
     }
 
     /**
@@ -71,6 +71,6 @@ class BookImageController extends Controller
     public function destroy(string $id)
     {
         BookImage::destroy($id);
-        return to_route('images.index');
+        return to_route('imagens.index');
     }
 }

@@ -3,30 +3,9 @@
 use App\Models\Book;
 use App\Models\BookImage;
 use App\Models\User;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 beforeEach(function () {
-    $permissions = [
-        ["name" => "ver imagens", "guard_name" => "web"],
-        ["name" => "ver uma imagem", "guard_name" => "web"],
-        ["name" => "criar imagens", "guard_name" => "web"],
-        ["name" => "editar imagens", "guard_name" => "web"],
-        ["name" => "deletar imagens", "guard_name" => "web"],
-    ];
-
-    $userPermissions = [
-        "ver imagens",
-        "ver uma imagem",
-        "criar imagens",
-        "editar imagens",
-        "deletar imagens",
-    ];
-
-    Permission::insert($permissions);
-    Role::create(['name' => 'Admin', 'guard_name' => 'web'])->givePermissionTo($userPermissions);
-
-    $this->admin = User::factory()->create()->assignRole("Admin");
+    $this->admin = User::factory()->create();
 });
 
 test("página de imagens pode ser vista", function () {
@@ -40,7 +19,7 @@ test("página de imagens pode ser vista", function () {
 test("imagem pode ser criada", function () {
     $livro = BookImage::factory()->for(Book::factory()->create())->create();
 
-    $imagem = ["path" => "/age12/test-image/", "livro_id" => $livro->id];
+    $imagem = ["path" => "/age12/test-image/", "book_id" => $livro->id];
 
     $response = $this->actingAs($this->admin)->post("/imagens", $imagem);
 

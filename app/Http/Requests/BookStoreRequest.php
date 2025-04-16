@@ -3,12 +3,13 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class BookStoreRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->can("criar livros");
+        return Auth::check();
     }
 
     public function rules()

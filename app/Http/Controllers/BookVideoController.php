@@ -6,7 +6,6 @@ use App\Models\Book;
 use App\Models\BookVideo;
 use App\Http\Requests\{BookVideoStoreRequest, BookVideoUpdateRequest};
 use App\Services\BookVideoService;
-use Illuminate\Support\Facades\Gate;
 
 class BookVideoController extends Controller
 {
@@ -15,8 +14,6 @@ class BookVideoController extends Controller
      */
     public function index()
     {
-        Gate::authorize('ver videos');
-
         // TODO: adicionar query string de numeros de itens paginados
 
         return inertia(
@@ -30,8 +27,6 @@ class BookVideoController extends Controller
      */
     public function create()
     {
-        Gate::authorize('criar videos');
-
         // TODO: adicionar livros ao cache
         return inertia('Video/Create', ['livros' => Book::all()]);
     }
@@ -50,8 +45,6 @@ class BookVideoController extends Controller
      */
     public function show(string $id)
     {
-        Gate::authorize('ver um video');
-
         return inertia('Video/Show', ['video' => BookVideo::find($id)->load('book')]);
     }
 
@@ -60,8 +53,6 @@ class BookVideoController extends Controller
      */
     public function edit(string $id)
     {
-        Gate::authorize('editar videos');
-
         return inertia('Video/Edit', ['imagem' => BookVideo::find($id)->load('book')]);
     }
 

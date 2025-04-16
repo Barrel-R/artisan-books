@@ -1,2 +1,11 @@
 @import "tailwindcss";
 @source "../views";
+
+@theme {
+    --color-seasalt: #F5F8F6ff;
+    --color-lavender-pink: #FAAECDff;
+    --color-antiflash-white: #EFF2F5ff;
+    --color-vivid-sky-blue: #5CC8F3ff;
+    --color-alice-blue: #E3EFF6ff;
+
+}

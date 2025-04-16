@@ -17,11 +17,9 @@ class CategoryService
         return Category::create($request->validated());
     }
 
-    public function updateCategory(Category $category, CategoryUpdateRequest $request): Category
+    public function updateCategory(CategoryUpdateRequest $request, Category $category): Category
     {
-        $data = $request->validated();
-        $category->update($data);
-
+        $category->update($request->validated());
         return $category->fresh();
     }
 
