@@ -1,10 +1,10 @@
 <template>
     <header class="relative w-full py-8 overflow-hidden bg-blue-100">
         <div class="container relative z-10 px-4 mx-auto">
-            <h1 class="text-4xl font-bold text-center text-pink-400 md:text-5xl lg:text-6xl">
+            <h1 class="text-4xl heading-600 text-center text-pink-400 md:text-5xl lg:text-6xl">
                 Gatinha Arteira
             </h1>
-            <p class="mt-4 text-xl text-center text-blue-400">
+            <p class="mt-4 heading-500 text-xl text-center text-blue-400">
                 Livros artesanais feitos à mão para mentes curiosas.
             </p>
         </div>

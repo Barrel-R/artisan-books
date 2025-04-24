@@ -9,7 +9,7 @@ defineEmits(['update:activeTab']);
 
 <template>
     <div class="flex flex-col items-center mb-8">
-        <h2 class="mb-6 text-2xl font-bold text-center text-blue-400 md:text-3xl">
+        <h2 class="mb-6 text-2xl cherry-swash text-center text-blue-400 md:text-3xl">
             Nossa coleção feita à mão
         </h2>
         <div class="inline-flex h-10 items-center justify-center rounded-md bg-blue-50 p-1 text-blue-400">

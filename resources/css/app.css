@@ -2,11 +2,29 @@
 @source "../views";
 
 @theme {
+    /* grayish-green / off-white */
     --color-seasalt: #F5F8F6ff;
-    --color-secondary: #FAAECDff;
+
+    /* light gray-blue */
     --color-primary: #EFF2F5ff;
+
+    /* pastel pink */
+    --color-secondary: #FAAECDff;
+
+    /* bright sky blue */
     --color-tertiary: #5CC8F3ff;
+
+    /* place icy blue with a hint of gray*/
     --color-light-tertiary: #E3EFF6ff;
+}
+
+.cherry-swash {
+    font-family: 'Cherry Swash', sans-serif;
+    font-weight: 400;
+}
+
+.roboto {
+    font-family: 'Roboto', sans-serif;
 }
 
 .heading-400 {
