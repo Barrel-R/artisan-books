@@ -3,9 +3,48 @@
 
 @theme {
     --color-seasalt: #F5F8F6ff;
-    --color-lavender-pink: #FAAECDff;
-    --color-antiflash-white: #EFF2F5ff;
-    --color-vivid-sky-blue: #5CC8F3ff;
-    --color-alice-blue: #E3EFF6ff;
+    --color-secondary: #FAAECDff;
+    --color-primary: #EFF2F5ff;
+    --color-tertiary: #5CC8F3ff;
+    --color-light-tertiary: #E3EFF6ff;
+}
 
+.heading-400 {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 400;
+}
+
+.heading-500 {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 500;
+}
+
+.heading-600 {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+}
+
+.heading-700 {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+}
+
+.body-300 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+}
+
+.body-400 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+}
+
+.body-500 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+}
+
+.body-600 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
 }
