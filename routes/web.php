@@ -17,7 +17,7 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/painel', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/admin', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::resource('livros', BookController::class);
     Route::resource('videos', BookVideoController::class);
     Route::resource('imagens', BookImageController::class, ['parameters' => ['imagens' => 'imagem']]);
